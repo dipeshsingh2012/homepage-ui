@@ -166,3 +166,4 @@ export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
     </div>
   );
 };
+

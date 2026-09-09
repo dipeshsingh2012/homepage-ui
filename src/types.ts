@@ -32,3 +32,4 @@ export interface HomepageContent {
   howItWorks: HowItWorksStep[];
   curatedProductIds: string[];
 }
+

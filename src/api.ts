@@ -78,3 +78,4 @@ export async function fetchHomepageData(): Promise<HomepageContent> {
     curatedProductIds: ['prod_breville_barista_touch', 'prod_delonghi_dedica'],
   };
 }
+
