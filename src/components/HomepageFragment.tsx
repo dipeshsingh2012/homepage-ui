@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Ruler, Sparkles } from 'lucide-react';
+import { ArrowRight, Ruler } from 'lucide-react';
 import {
   ProtonThemeProvider,
   ProtonButton,
   ProtonCard,
   ProtonStatusBadge,
 } from '@dipesh.singh/proton/react';
+import { HeroBanner } from '@dipesh.singh/commerce-ui';
 import { fetchHomepageData } from '../api';
 import { HomepageContent } from '../types';
 
@@ -40,66 +41,58 @@ export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
   return (
     <ProtonThemeProvider>
       <div className="space-y-16 py-6">
-        {/* Hero Section */}
-        <section className="relative rounded-3xl overflow-hidden bg-slate-950 text-white min-h-[480px] flex items-center shadow-xl">
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
-            style={{ backgroundImage: `url(${content.hero.backgroundImage})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent" />
-
-          <div className="relative max-w-2xl px-6 sm:px-12 py-12 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Hiljhil Cafe & Specialty Roasters • hiljhil.cafe</span>
+        {/* Hero Section using @dipesh.singh/commerce-ui */}
+        <HeroBanner
+          layout="single"
+          eyebrow="Hiljhil Cafe & Specialty Roasters • hiljhil.cafe"
+          headline={content.hero.headline}
+          description={content.hero.subheadline}
+          backgroundImage={content.hero.backgroundImage}
+          ctas={[
+            {
+              label: content.hero.ctaText || 'Explore Roastery & Coffee Bar',
+              url: content.hero.ctaLink || '#/collection',
+              variant: 'primary',
+            },
+          ]}
+        >
+          {/* Spatial Qualifier Bar */}
+          <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 max-w-lg space-y-3">
+            <div className="flex items-center justify-between text-xs font-medium text-slate-200">
+              <span className="flex items-center gap-1.5">
+                <Ruler className="w-4 h-4 text-amber-400" />
+                {content.hero.spatialHook.title}
+              </span>
+              <span className="text-[11px] text-amber-300 font-semibold">Home Barista Filter</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-              {content.hero.headline}
-            </h1>
-
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
-              {content.hero.subheadline}
-            </p>
-
-            {/* Spatial Qualifier Bar */}
-            <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 max-w-lg space-y-3">
-              <div className="flex items-center justify-between text-xs font-medium text-slate-200">
-                <span className="flex items-center gap-1.5">
-                  <Ruler className="w-4 h-4 text-amber-400" />
-                  {content.hero.spatialHook.title}
-                </span>
-                <span className="text-[11px] text-amber-300 font-semibold">Home Barista Filter</span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 bg-slate-900/80 px-3 py-2 rounded-xl border border-white/10 text-white text-xs">
+                <span>Height:</span>
+                <input
+                  type="number"
+                  value={clearanceInput}
+                  onChange={(e) => setClearanceInput(e.target.value)}
+                  className="w-12 bg-transparent text-amber-400 font-bold focus:outline-none text-right"
+                  min="30"
+                  max="70"
+                />
+                <span className="text-slate-400">cm</span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 bg-slate-900/80 px-3 py-2 rounded-xl border border-white/10 text-white text-xs">
-                  <span>Height:</span>
-                  <input
-                    type="number"
-                    value={clearanceInput}
-                    onChange={(e) => setClearanceInput(e.target.value)}
-                    className="w-12 bg-transparent text-amber-400 font-bold focus:outline-none text-right"
-                    min="30"
-                    max="70"
-                  />
-                  <span className="text-slate-400">cm</span>
-                </div>
-
-                <div className="flex-1">
-                  <ProtonButton
-                    fullWidth
-                    size="sm"
-                    endIcon={<ArrowRight style={{ width: 14, height: 14 }} />}
-                    onClick={() => onClearanceSelect?.(parseFloat(clearanceInput) || 45)}
-                  >
-                    Filter Matching Gear
-                  </ProtonButton>
-                </div>
+              <div className="flex-1">
+                <ProtonButton
+                  fullWidth
+                  size="sm"
+                  endIcon={<ArrowRight style={{ width: 14, height: 14 }} />}
+                  onClick={() => onClearanceSelect?.(parseFloat(clearanceInput) || 45)}
+                >
+                  Filter Matching Gear
+                </ProtonButton>
               </div>
             </div>
           </div>
-        </section>
+        </HeroBanner>
 
         {/* Digital Real Estate: Visit Hiljhil Cafe Flagship */}
         <section className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm space-y-6">
