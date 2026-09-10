@@ -1,6 +1,9 @@
 import { HomepageContent } from './types';
 
-const HOMEPAGE_API_URL = import.meta.env.VITE_HOMEPAGE_API_URL || 'http://localhost:8002/api/v1/homepage';
+const HOMEPAGE_API_URL =
+  (typeof process !== 'undefined' && process.env && (process.env.HOMEPAGE_API_URL || process.env.VITE_HOMEPAGE_API_URL)) ||
+  (typeof import.meta !== 'undefined' && (import.meta as any).env && (import.meta as any).env.VITE_HOMEPAGE_API_URL) ||
+  'http://localhost:8002/api/v1/homepage';
 
 export async function fetchHomepageData(): Promise<HomepageContent> {
   try {
