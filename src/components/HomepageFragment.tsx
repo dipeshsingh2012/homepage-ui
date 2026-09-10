@@ -5,7 +5,7 @@ import {
   ProtonButton,
   ProtonCard,
   ProtonStatusBadge,
-} from '@dipeshsingh2012/proton/react';
+} from '@dipesh.singh/proton/react';
 import { fetchHomepageData } from '../api';
 import { HomepageContent } from '../types';
 
