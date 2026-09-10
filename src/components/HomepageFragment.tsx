@@ -167,3 +167,4 @@ export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
   );
 };
 
+export default HomepageFragment;
