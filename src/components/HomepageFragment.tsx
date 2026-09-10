@@ -6,18 +6,139 @@ import {
   ProtonCard,
   ProtonStatusBadge,
 } from '@dipesh.singh/proton/react';
-import { HeroBanner } from '@dipesh.singh/commerce-ui';
+import {
+  HeroBanner,
+  CategoryLane,
+  ProductSlider,
+  TestimonialsSection,
+  CategoryTileItem,
+  SliderProduct,
+  TestimonialItem,
+} from '@dipesh.singh/commerce-ui';
 import { fetchHomepageData } from '../api';
 import { HomepageContent } from '../types';
 
 interface HomepageFragmentProps {
   onCategorySelect?: (categorySlug: string) => void;
   onClearanceSelect?: (clearanceCm: number) => void;
+  onProductSelect?: (productId: string) => void;
+  onAddToCart?: (product: any) => void;
 }
+
+const CATEGORY_TILES: CategoryTileItem[] = [
+  {
+    id: 'roasted-coffee',
+    title: 'Roasted & Ground Coffee',
+    imageUrl: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&h=300&fit=crop&q=80',
+    href: '#/coffees',
+  },
+  {
+    id: 'espresso-machines',
+    title: 'Espresso Machines',
+    imageUrl: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=300&h=300&fit=crop&q=80',
+    href: '#/equipment',
+    badge: 'Popular',
+  },
+  {
+    id: 'brewing-gear',
+    title: 'Brewing Equipment',
+    imageUrl: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=300&h=300&fit=crop&q=80',
+    href: '#/equipment',
+  },
+  {
+    id: 'grinders',
+    title: 'Burr Grinders',
+    imageUrl: 'https://images.unsplash.com/photo-1589396575653-c09c794ff6a6?w=300&h=300&fit=crop&q=80',
+    href: '#/equipment',
+  },
+  {
+    id: 'drinkware',
+    title: 'Barista Drinkware',
+    imageUrl: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&h=300&fit=crop&q=80',
+    href: '#/equipment',
+  },
+  {
+    id: 'roast-subscriptions',
+    title: 'Roast Subscriptions',
+    imageUrl: 'https://images.unsplash.com/photo-1610632380989-680fe40816c6?w=300&h=300&fit=crop&q=80',
+    href: '#/subscriptions',
+    badge: 'Save 15%',
+  },
+];
+
+const BESTSELLER_PRODUCTS: SliderProduct[] = [
+  {
+    id: 'baarbara-whiskey',
+    title: 'BAARBARA ESTATE - WHISKEY BARREL AGED',
+    subtitle: 'Ripe banana, Red Plum, Whiskey Oak, Brown Sugar',
+    price: '₹ 1,250',
+    imageUrl: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&h=600&fit=crop&q=80',
+    productUrl: '#/product/prod_breville_barista_touch',
+  },
+  {
+    id: 'elkhill-estates',
+    title: 'ELKHILL ESTATES',
+    subtitle: 'Orange, Brown Spice, Roasted Hazelnut, Milk Chocolate',
+    price: '₹ 800',
+    imageUrl: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&h=600&fit=crop&q=80',
+    productUrl: '#/product/prod_fellow_ode_gen2',
+  },
+  {
+    id: 'sea-salt-mocha',
+    title: 'SEA SALT MOCHA DROP | CONCENTRATE',
+    subtitle: 'Specialty Coffee Concentrate ready to stir & sip',
+    price: '₹ 250',
+    badge: 'NEW',
+    imageUrl: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=600&h=600&fit=crop&q=80',
+    productUrl: '#/product/prod_breville_barista_touch',
+  },
+  {
+    id: 'vienna-dark-roast',
+    title: 'VIENNA | DARK ROAST - EASY POUR',
+    subtitle: 'Blue Tokai Coffee Easy Pour Box • 5 Single Sachets',
+    price: '₹ 300',
+    imageUrl: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&h=600&fit=crop&q=80',
+    productUrl: '#/product/prod_acaia_lunar',
+  },
+  {
+    id: 'attikan-estate',
+    title: 'ATTIKAN ESTATE - ESPRESSO ROAST',
+    subtitle: 'Dark Chocolate, Figs, Roasted Almonds',
+    price: '₹ 550',
+    imageUrl: 'https://images.unsplash.com/photo-1589396575653-c09c794ff6a6?w=600&h=600&fit=crop&q=80',
+    productUrl: '#/product/prod_fellow_ode_gen2',
+  },
+];
+
+const CUSTOMER_TESTIMONIALS: TestimonialItem[] = [
+  {
+    id: 'review-1',
+    quote:
+      "I've been drinking coffee for a year now but never tried Blue Tokai. I heard about Attikan a lot and it was worth the hype! I am not a fan of darker roasts but it was one of the smoothest coffees I've tried till now. I'm definitely ordering again.",
+    rating: 5,
+    author: 'KEERTHI HARDASANI',
+  },
+  {
+    id: 'review-2',
+    quote:
+      'Love the packaging, the coffee selection, the community events you do. The general love for coffee you want to share with the world is amazing to see. Keep shining! :)',
+    rating: 5,
+    author: 'SAHIL MADAN',
+  },
+  {
+    id: 'review-3',
+    quote:
+      'Blue Tokai is hands down the best coffee brand out there! I’ve enjoyed each cup at their cafes and whenever I brew at home. I can’t get enough of their coffee and I recommend it to everyone!',
+    rating: 5,
+    author: 'KRISHNA SARBADHIKARY',
+  },
+];
 
 export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
   onCategorySelect,
   onClearanceSelect,
+  onProductSelect,
+  onAddToCart,
 }) => {
   const [content, setContent] = useState<HomepageContent | null>(null);
   const [clearanceInput, setClearanceInput] = useState<string>('45');
@@ -93,6 +214,37 @@ export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
             </div>
           </div>
         </HeroBanner>
+
+        {/* Circular Category Lane Navigation */}
+        <section className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs">
+          <CategoryLane
+            title="Explore by Category"
+            subtitle="Single origin estate roasts, espresso machines, and precision barista gear"
+            categories={CATEGORY_TILES}
+            onSelectCategory={(cat) => {
+              onCategorySelect?.(String(cat.id));
+            }}
+          />
+        </section>
+
+        {/* Bestseller Coffees Product Slider Carousel */}
+        <section className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs">
+          <ProductSlider
+            title="Bestseller Coffees"
+            subtitle="Freshly roasted specialty coffee beans and cold brew drops from India's premier estates"
+            products={BESTSELLER_PRODUCTS}
+            onBuyNow={(prod) => {
+              onAddToCart?.({ id: prod.id, name: prod.title, price: prod.price });
+              window.location.hash = '#/checkout';
+            }}
+            onQuickAdd={(prod) => {
+              onAddToCart?.({ id: prod.id, name: prod.title, price: prod.price });
+            }}
+            onProductClick={(prod) => {
+              onProductSelect?.(String(prod.id));
+            }}
+          />
+        </section>
 
         {/* Digital Real Estate: Visit Hiljhil Cafe Flagship */}
         <section className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm space-y-6">
@@ -211,6 +363,16 @@ export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Social Proof & Customer Reviews */}
+      <section className="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <TestimonialsSection
+          title="Happy Customers"
+          testimonials={CUSTOMER_TESTIMONIALS}
+          showBotanicalAccents={true}
+          showBrandIcon={true}
+        />
       </section>
 
       {/* How It Works */}
