@@ -26,10 +26,20 @@ export interface HowItWorksStep {
   description: string;
 }
 
+export interface DynamicLane<T = any> {
+  title?: string;
+  subtitle?: string;
+  hasNavigationArrows?: boolean;
+  items: T[];
+}
+
 export interface HomepageContent {
   hero: HomepageHero;
   featuredCategories: FeaturedCategory[];
   howItWorks: HowItWorksStep[];
   curatedProductIds: string[];
+  categoryLane?: DynamicLane<any>;
+  productLane?: DynamicLane<any>;
+  lanes?: any[];
 }
 

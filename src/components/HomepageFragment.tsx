@@ -218,9 +218,10 @@ export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
         {/* Circular Category Lane Navigation */}
         <section className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs">
           <CategoryLane
-            title="Explore by Category"
-            subtitle="Single origin estate roasts, espresso machines, and precision barista gear"
-            categories={CATEGORY_TILES}
+            title={content.categoryLane?.title || "Explore by Category"}
+            subtitle={content.categoryLane?.subtitle || "Single origin estate roasts, espresso machines, and precision barista gear"}
+            categories={content.categoryLane?.items && content.categoryLane.items.length > 0 ? content.categoryLane.items : CATEGORY_TILES}
+            hasNavigationArrows={content.categoryLane?.hasNavigationArrows ?? true}
             onSelectCategory={(cat) => {
               onCategorySelect?.(String(cat.id));
             }}
@@ -230,9 +231,9 @@ export const HomepageFragment: React.FC<HomepageFragmentProps> = ({
         {/* Bestseller Coffees Product Slider Carousel */}
         <section className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs">
           <ProductSlider
-            title="Bestseller Coffees"
-            subtitle="Freshly roasted specialty coffee beans and cold brew drops from India's premier estates"
-            products={BESTSELLER_PRODUCTS}
+            title={content.productLane?.title || "Bestseller Coffees"}
+            subtitle={content.productLane?.subtitle || "Freshly roasted specialty coffee beans and cold brew drops from India's premier estates"}
+            products={content.productLane?.items && content.productLane.items.length > 0 ? content.productLane.items : BESTSELLER_PRODUCTS}
             onBuyNow={(prod) => {
               onAddToCart?.({ id: prod.id, name: prod.title, price: prod.price });
               window.location.hash = '#/checkout';

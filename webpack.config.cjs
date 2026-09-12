@@ -84,7 +84,7 @@ const serverConfig = {
   output: {
     path: path.resolve(__dirname, 'dist/server'),
     filename: '[name].js',
-    publicPath: process.env.SSR_HOMEPAGE_PUBLIC_PATH || 'http://localhost:5001/server/',
+    publicPath: process.env.SSR_HOMEPAGE_PUBLIC_PATH || 'auto',
     clean: true,
   },
   module: {
